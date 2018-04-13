@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css">
+
+    <title>ophTxt2slides</title>
+    <style>
+        .ophForm{
+            width: 70%;
+            margin: auto;
+            margin-top: 50px;
+        }
+        .ophForm > textarea {
+            width: 100%;
+            height: 250px;
+            resize: vertical;
+        }
+        .ophForm > input {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<main v-bind:class="{ reveal: started}">
+    <div class="slides" v-if="started">
+        <section v-for="slide in slides">{{ slide.contents }}</section>
+    </div>
+    <form class="ophForm" v-on:submit.prevent="onSubmit" v-if="!started">
+        <textarea id="intxt" v-model="txt" placeholder="Votre texte à convertir en présentation"></textarea>
+        <input type="submit"/>
+    </form>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script>
+<script>
+var app = new Vue({
+  el: 'main',
+  data: {
+    started: false, 
+    txt: '',
+  },
+  computed: {
+    slides: function() {
+        return this.txt
+        .split(".")
+        .map(t=>t.trim())
+        .filter(t=>t.length>0)
+        .map((t,i)=>({
+            num: i,
+            contents: t
+        }));
+    }
+  },
+  methods: {
+    onSubmit: function (event) {
+        this.started = true;
+        setTimeout(()=>Reveal.initialize(), 100);
+    }
+  }
+})
+
+</script>
+</body>
+</html>
