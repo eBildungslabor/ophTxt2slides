@@ -26,7 +26,7 @@ var app = new Vue({
   computed: {
     slides: function() {
         return this.txt
-        .split(".")
+        .split(/(?<=\.|\?|\!) +|\n/)
         .map(t=>t.trim())
         .filter(t=>t.length>0)
         .map((t,i)=>({
