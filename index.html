@@ -4,37 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css">
 
     <title>ophTxt2slides</title>
-    <style>
-        .ophForm{
-            width: 70%;
-            margin: auto;
-            margin-top: 50px;
-        }
-        .ophForm > textarea {
-            width: 100%;
-            height: 250px;
-            resize: vertical;
-        }
-        .ophForm > .btn {
-            width: 100%;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            border: 1px solid black;
-            text-align: center;
-            font-family: sans;
-            background-color:aliceblue;
-            color:black;
-            padding: 3px;
-            display: block;
-            text-decoration: none;
-            font-size: 1.2em;
-        }
-    </style>
 </head>
 <body>
 <main v-bind:class="{ reveal: started}">
@@ -49,71 +24,6 @@
 </main>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/js/reveal.js"></script>
-<script>
-
-var DRAW_NS = "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0";
-var FODP_MIME = "application/vnd.oasis.opendocument.presentation-flat-xml";
-
-var fodptemplate = fetch("presentation.fodp")
-    .then(d=>d.text())
-    .then(t=>new DOMParser().parseFromString(t, "text/xml"));
-
-function xmlReplace(node, search, replace) {
-    if (node == null) return;
-    for (n of node.childNodes) {
-        if (n.nodeType === Node.TEXT_NODE) {
-            n.data = n.data.replace(search, replace);
-            console.log(n.data);
-        }
-        else xmlReplace(n, search, replace);
-    }
-}
-
-var app = new Vue({
-  el: 'main',
-  data: {
-    started: false, 
-    txt: '',
-    fodp: 'data:text/plain,the document is not ready'
-  },
-  computed: {
-    slides: function() {
-        return this.txt
-        .split(".")
-        .map(t=>t.trim())
-        .filter(t=>t.length>0)
-        .map((t,i)=>({
-            num: i,
-            contents: t
-        }));
-    },
-  },
-  methods: {
-    onSubmit: function (event) {
-        this.started = true;
-        setTimeout(()=>Reveal.initialize(), 100);
-    },
-    onChange: function() {
-        var that = this;
-        fodptemplate.then(tplDoc => {
-            let doc = tplDoc.cloneNode(true);
-            let pages = doc.getElementsByTagNameNS(DRAW_NS, "page");
-            let lastPage = pages[pages.length-1];
-            let root = lastPage.parentElement;
-            that.slides.forEach(slide => {
-                let newPage = lastPage.cloneNode(true);
-                xmlReplace(newPage, "{{contents}}", slide.contents);
-                root.appendChild(newPage);
-            });
-            root.removeChild(lastPage);
-            let xmlStr = new XMLSerializer().serializeToString(doc);
-            let blob = new Blob([xmlStr], {type:FODP_MIME});
-            that.fodp = URL.createObjectURL(blob);
-        })
-    }
-  }
-})
-
-</script>
+<script src="app.js"></script>
 </body>
 </html>
