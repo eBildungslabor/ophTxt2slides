@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/reveal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/theme/white.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/3.6.0/css/print/paper.css">
-
     <title>ophTxt2slides</title>
 </head>
 <body>
@@ -17,9 +16,9 @@
         <section v-for="slide in slides">{{ slide.contents }}</section>
     </div>
     <form class="ophForm" v-on:submit.prevent="onSubmit" v-if="!started">
-        <textarea id="intxt" v-model="txt" v-on:input="onChange" placeholder="Votre texte à convertir en présentation"></textarea>
-        <input type="submit" value="Lancer la présentation" class="btn"/>
-        <a class="btn" v-bind:href="fodp" download="presentation.fodp">Télécharger au format <em>LibreOffice Impress</em></a>
+        <textarea id="intxt" v-model="txt" v-on:input="onChange" placeholder="Entrez ici votre texte à convertir en présentation"></textarea>
+        <input v-if="txt" type="submit" value="Lancer la présentation" class="btn"/>
+        <a v-if="fodp!=null" class="btn" v-bind:href="fodp" download="presentation.fodp">Télécharger au format <em>LibreOffice Impress</em></a>
     </form>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

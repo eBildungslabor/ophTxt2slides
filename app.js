@@ -11,7 +11,6 @@ function xmlReplace(node, search, replace) {
     for (n of node.childNodes) {
         if (n.nodeType === Node.TEXT_NODE) {
             n.data = n.data.replace(search, replace);
-            console.log(n.data);
         }
         else xmlReplace(n, search, replace);
     }
@@ -22,7 +21,7 @@ var app = new Vue({
   data: {
     started: false, 
     txt: '',
-    fodp: 'data:text/plain,the document is not ready'
+    fodp: null
   },
   computed: {
     slides: function() {
