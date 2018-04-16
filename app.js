@@ -1,22 +1,17 @@
+const DRAW_NS = "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0";
+const FODP_MIME = "application/vnd.oasis.opendocument.presentation-flat-xml";
 
-var DRAW_NS = "urn:oasis:names:tc:opendocument:xmlns:drawing:1.0";
-var FODP_MIME = "application/vnd.oasis.opendocument.presentation-flat-xml";
-
-var fodptemplate = fetch("presentation.fodp")
+const fodptemplate = fetch("presentation.fodp")
     .then(d=>d.text())
     .then(t=>new DOMParser().parseFromString(t, "text/xml"));
 
 function xmlReplace(node, search, replace) {
-    if (node == null) return;
-    for (n of node.childNodes) {
-        if (n.nodeType === Node.TEXT_NODE) {
-            n.data = n.data.replace(search, replace);
-        }
-        else xmlReplace(n, search, replace);
-    }
+    if (node.nodeType === Node.TEXT_NODE) 
+	node.data = node.data.replace(search, replace);
+    for (let n of node.childNodes) xmlReplace(n, search, replace);
 }
 
-var app = new Vue({
+const app = new Vue({
   el: 'main',
   data: {
     started: false, 
@@ -60,4 +55,4 @@ var app = new Vue({
         })
     }
   }
-})
+});
