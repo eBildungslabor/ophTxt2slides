@@ -16,9 +16,10 @@
         <section v-for="slide in slides">{{ slide.contents }}</section>
     </div>
     <form class="ophForm" v-on:submit.prevent="onSubmit" v-if="!started">
+	<h1>Convertisseur de texte en diapositives</h1>
         <textarea id="intxt" v-model="txt" v-on:input="onChange" placeholder="Entrez ici votre texte à convertir en présentation"></textarea>
         <input v-if="txt" type="submit" value="Lancer la présentation" class="btn"/>
-        <a v-if="fodp!=null" class="btn" v-bind:href="fodp" download="presentation.fodp">Télécharger au format <em>LibreOffice Impress</em></a>
+        <a v-if="txt && fodp!=null" class="btn" v-bind:href="fodp" download="presentation.fodp">Télécharger au format <em>LibreOffice Impress</em></a>
     </form>
 </main>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>

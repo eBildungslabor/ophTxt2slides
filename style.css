@@ -1,25 +1,48 @@
 .ophForm{
     width: 70%;
+    min-width: 500px;
+    min-height: 500px;
+    max-height:70%;
     margin: auto;
     margin-top: 50px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 1px;
+    background-color: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
 }
+.ophForm > h1 {
+    grid-column: 1/3;
+    font-family: sans;
+    padding: 10px;
+    text-align: center;
+}
+
 .ophForm > textarea {
+    grid-column: 1/3;
+    padding: 15px;
+    box-sizing: border-box;
+    font-family: Arial;
     width: 100%;
-    height: 250px;
     resize: vertical;
     font-size: 15px;
+    min-height: 450px;
 }
+
 .ophForm > .btn {
-    width: 100%;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border: 1px solid black;
+    border: 0;
     text-align: center;
     font-family: sans;
-    background-color:aliceblue;
+    background-color: transparent;
     color:black;
-    padding: 3px;
-    display: block;
+    padding: 9px;
     text-decoration: none;
     font-size: 1.2em;
+    cursor: pointer;
+}
+
+.ophForm > .btn:hover {
+    background-color: rgba(0,0,0,.1);
+    transition: .5s;
 }
