@@ -16,8 +16,8 @@
         <section v-for="slide in slides">{{ slide.contents }}</section>
     </div>
     <form class="ophForm" v-on:submit.prevent="onSubmit" v-if="!started">
-	<h1>Text einfügen - Jeder Satz wird zu einer Folie</h1>
-        <textarea id="intxt" v-model="txt" v-on:input="onChange" placeholder="Entrez ici votre texte à convertir en présentation"></textarea>
+	<h1>Simple Präsentation</h1>
+        <textarea id="intxt" v-model="txt" v-on:input="onChange" placeholder="Text einfügen - Jeder Satz wird zu einer Folie"></textarea>
         <input v-if="txt" type="submit" value="Präsentation starten" class="btn"/>
         <a v-if="txt && fodp!=null" class="btn" v-bind:href="fodp" download="presentation.fodp">Download als Libre Office Impress</a>
     </form>
